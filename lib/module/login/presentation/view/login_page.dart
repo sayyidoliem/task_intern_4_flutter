@@ -81,38 +81,42 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     FutureBuilder(
-              //       future: UserStorage.getCode(),
-              //       builder: (context, snapshoot) {
-              //         if (snapshoot.data == null) {
-              //           return const Text('Code: Value code kosong');
-              //         } else {
-              //           return Text('Code: ${snapshoot.data}');
-              //         }
-              //       },
-              //     ),
-              //     FutureBuilder(
-              //       future: UserStorage.getUserId(),
-              //       builder: (context, snapshoot) {
-              //         if (snapshoot.data == null) {
-              //           return const Text('User ID: Value user_id kosong');
-              //         } else {
-              //           return Text('User ID: ${snapshoot.data}');
-              //         }
-              //       },
-              //     ),
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FutureBuilder(
+                    future: UserStorage.getCode(),
+                    builder: (context, snapshoot) {
+                      if (snapshoot.data == null) {
+                        return const Text('Code: Value code kosong');
+                      } else {
+                        return Text('Code: ${snapshoot.data}');
+                      }
+                    },
+                  ),
+                  FutureBuilder(
+                    future: UserStorage.getUserId(),
+                    builder: (context, snapshoot) {
+                      if (snapshoot.data == null) {
+                        return const Text('User ID: Value user_id kosong');
+                      } else {
+                        return Text('User ID: ${snapshoot.data}');
+                      }
+                    },
+                  ),
+                ],
+              ),
               ElevatedButton(
                 onPressed: () async {
-                  final userName = _userNameController.text;
-                  final password = _passwordController.text;
-                  final code = _codeController.text;
+                  // final userName = _userNameController.text;
+                  // final password = _passwordController.text;
+                  // final code = _codeController.text;
+                  const userName = "AlbertoJulius123";
+                  const password = "123456";
+                  const code = "Zegen678";
                   final result =
                       await LoginService().login(userName, password, code);
+          
                   if (context.mounted) {
                     if (result == true) {
                       Navigator.pushNamed(context, RoutesName.bottomNav);

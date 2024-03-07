@@ -4,6 +4,7 @@ export 'package:bloc/bloc.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 export 'package:dio/dio.dart';
+export 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 //data
 export 'package:task_intern_3_flutter/module/login/data/login_repositories.dart';

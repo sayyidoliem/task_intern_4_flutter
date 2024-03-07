@@ -1,8 +1,7 @@
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:task_intern_3_flutter/import.dart';
 
 mixin LoginInterceptor {
-  var option = BaseOptions(baseUrl: 'http://103.82.242.180:1440/api/v1');
+  var option = BaseOptions(baseUrl: BaseUrl.url);
 
   Future<Dio> loginInterceptor() async {
     Dio dio = Dio(option);
@@ -34,16 +33,34 @@ mixin LoginInterceptor {
         print("LEWAT");
         return handler.next(request);
       },
-      onError: (error, handler) {
+      onError: (error, handler) async {
         print("Stack trace Error: ${error.stackTrace}");
         if (error.response?.statusCode == 401 ||
             error.response?.statusCode == 400) {
           print(
               "ERROR : ${error.response?.statusCode} ${error.response?.statusMessage}");
+          String newAccessToken = await refreshToken();
+
+          error.requestOptions.headers["Authorization"] =
+              "Bearer $newAccessToken";
+
+          return handler.resolve(await dio.fetch(error.requestOptions));
         }
         return handler.next(error);
       },
     ));
     return dio;
+  }
+
+  Future<String> refreshToken() async {
+    Dio dio = Dio(option);
+    final refreshToken = await TokenStorage.getToken();
+
+    final response = await dio
+        .post("/auth/refresh-token-mobile", data: {'token': refreshToken});
+
+    final newAccessToken = response.data['data']['token'];
+
+    return newAccessToken;
   }
 }
