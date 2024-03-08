@@ -56,10 +56,12 @@ mixin LoginInterceptor {
     Dio dio = Dio(option);
     final refreshToken = await TokenStorage.getToken();
 
+    //TODO Yg di dalam data yaitu refresh token bukan access token
     final response = await dio
         .post("/auth/refresh-token-mobile", data: {'token': refreshToken});
 
     final newAccessToken = response.data['data']['token'];
+    // TODO access token yg baru dan refresh token yg baru jgn lupa di simpan lg di TokenStorage
 
     return newAccessToken;
   }
