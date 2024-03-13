@@ -10,4 +10,16 @@ class TokenStorage {
   static Future<String?> getToken() {
     return storage.read(key: 'token');
   }
+
+  static Future<void> saveRefreshToken(String token) {
+    return storage.write(key: 'refresh_token', value: token);
+  }
+
+  static Future<String?> getRefreshToken() {
+    return storage.read(key: 'refresh_token');
+  }
+
+  static Future<void> clear() {
+    return storage.deleteAll();
+  }
 }

@@ -3,6 +3,8 @@ abstract class LoginRepositories {
 
   Future<void> saveToken(Map<String, dynamic> tokenMap);
 
+  Future<void> saveRefreshToken(Map<String, dynamic> tokenMap);
+
   Future<void> saveUserId(Map<String, dynamic> userIdMap);
 
   Future<void> saveCode(String code);

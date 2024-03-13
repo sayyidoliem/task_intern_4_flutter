@@ -16,6 +16,12 @@ class LoginService with LoginInterceptor implements LoginRepositories {
   }
 
   @override
+  Future<void> saveRefreshToken(Map<String, dynamic> tokenMap) async {
+    final token = tokenMap['data']['refresh_token'];
+    await TokenStorage.saveRefreshToken(token);
+  }
+
+  @override
   Future<void> saveUserId(Map<String, dynamic> userIdMap) async {
     final userId = userIdMap['data']['user_id'];
     await UserStorage.saveUserId(userId);
@@ -38,6 +44,7 @@ class LoginService with LoginInterceptor implements LoginRepositories {
         await saveUserId(response.data);
         await saveCode(codeValue);
         await saveToken(response.data);
+        await saveRefreshToken(response.data);
         return true;
       } else {
         return false;

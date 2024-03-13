@@ -54,15 +54,25 @@ mixin LoginInterceptor {
 
   Future<String> refreshToken() async {
     Dio dio = Dio(option);
-    final refreshToken = await TokenStorage.getToken();
+    final refreshToken = await TokenStorage.getRefreshToken();
 
     //TODO Yg di dalam data yaitu refresh token bukan access token
-    final response = await dio
-        .post("/auth/refresh-token-mobile", data: {'token': refreshToken});
+    final response = await dio.post("/auth/refresh-token-mobile",
+        data: {'refresh_token': refreshToken});
 
     final newAccessToken = response.data['data']['token'];
+    final newRefreshToken = response.data['data']['refresh_token'];
+
     // TODO access token yg baru dan refresh token yg baru jgn lupa di simpan lg di TokenStorage
 
-    return newAccessToken;
+    try {
+      if (response.data['message'] == "Berhasil Membuat Token Baru") {
+        TokenStorage.saveToken(newAccessToken);
+        TokenStorage.saveRefreshToken(newRefreshToken);
+      }
+    } on DioException catch (e) {
+      print('Get Refresh Token Error ${e.toString()}');
+    }
+    return newRefreshToken;
   }
 }

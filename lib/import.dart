@@ -35,7 +35,7 @@ export 'package:task_intern_3_flutter/config/constant/names_routes.dart';
 
 //service
 export 'package:task_intern_3_flutter/module/login/application/login_service.dart';
-export 'package:task_intern_3_flutter/config/service/services.dart';
+export 'package:task_intern_3_flutter/config/service/login_interceptor.dart';
 export 'package:task_intern_3_flutter/module/profile/application/profile_service.dart';
 
 //constant
